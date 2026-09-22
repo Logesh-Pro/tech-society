@@ -21,6 +21,10 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       touchMultiplier: 2,
     });
 
+    // Expose lenis instance globally for custom scrolling
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).lenis = lenis;
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
