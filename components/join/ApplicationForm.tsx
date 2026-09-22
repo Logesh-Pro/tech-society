@@ -55,7 +55,10 @@ type Errors = Partial<Record<keyof ApplicationSubmission, string>>;
 /* ==============================================================
    Main component
 =============================================================== */
+import { useRouter } from "next/navigation";
+
 export default function ApplicationForm() {
+  const router = useRouter();
   const [isClient, setIsClient] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const formStartRef  = useRef<HTMLDivElement>(null);
@@ -247,8 +250,7 @@ export default function ApplicationForm() {
       <div className="flex flex-col sm:flex-row items-center gap-6">
         <button 
           onClick={() => {
-            // eslint-disable-next-line @next/next/no-location-assign-relative-destination
-            window.location.assign("/");
+            router.push("/");
           }}
           className="px-8 py-3 bg-white text-black font-mono font-bold uppercase tracking-widest text-xs hover:bg-white/90 transition-colors"
         >

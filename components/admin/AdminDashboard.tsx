@@ -5,8 +5,10 @@ import Link from "next/link";
 import { getApplications } from "@/lib/api/applications";
 import { Application, AdminStats } from "@/lib/api/types";
 import ApplicationDetail from "./ApplicationDetail";
+import { useRouter } from "next/navigation";
 
 export default function AdminDashboard() {
+  const router = useRouter();
   const [applications, setApplications] = useState<Application[]>([]);
   const [stats,        setStats]        = useState<AdminStats | null>(null);
   const [loading,      setLoading]      = useState(true);
@@ -21,7 +23,7 @@ export default function AdminDashboard() {
     // Replace with server-side authentication when backend is integrated.
     const auth = sessionStorage.getItem("ts_admin_auth");
     if (auth !== "true") {
-      window.location.replace("/admin/login");
+      router.replace("/admin/login");
     } else {
       const t = setTimeout(() => setIsAuthenticated(true), 0);
       return () => clearTimeout(t);
@@ -75,7 +77,7 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("ts_admin_auth");
-    window.location.replace("/admin/login");
+    router.replace("/admin/login");
   };
 
   const uniqueDomains = Array.from(new Set(applications.map(a => a.domain)));
